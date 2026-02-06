@@ -7,7 +7,7 @@
     <style>
         :root { --ua-blue: #0057b7; --ua-yellow: #ffd700; --bg: #ffffff; --card-bg: #f8f9fa; }
         
-        * { box-sizing: border-box; } /* Виправляє вихід кнопок за грані */
+        * { box-sizing: border-box; } 
 
         body { background: var(--bg); color: #333; font-family: 'Segoe UI', Arial, sans-serif; margin: 0; padding-top: 80px; }
 
@@ -23,14 +23,13 @@
         #menu.active { right: 0; }
         .close-menu { position: absolute; top: 20px; right: 20px; font-size: 40px; cursor: pointer; color: var(--ua-blue); }
 
-        /* Стиль сторінки "Про нас" всередині меню */
-        .about-content { max-width: 600px; text-align: center; line-height: 1.6; }
+        .about-content { max-width: 600px; text-align: center; line-height: 1.6; padding-top: 50px; }
         .about-content h2 { color: var(--ua-blue); text-transform: uppercase; }
 
         /* Картки зборів */
         .container { max-width: 500px; margin: auto; padding: 10px; }
         .card { background: var(--card-bg); border: 1px solid #e0e0e0; border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .card-title { font-weight: 800; font-size: 18px; color: var(--ua-blue); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .card-title { font-weight: 800; font-size: 18px; color: var(--ua-blue); margin-bottom: 10px; }
 
         .progress-box { background: #e0e0e0; height: 14px; border-radius: 7px; margin: 15px 0; overflow: hidden; }
         .bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--ua-blue), var(--ua-yellow)); transition: 2s ease-in-out; }
@@ -64,54 +63,68 @@
     <div class="close-menu" onclick="toggleMenu()">&times;</div>
     <div class="about-content">
         <h2>Про проект</h2>
-        <p><b>Front-Help_UA</b> — це незалежна платформа для швидкої підтримки захисників України та гуманітарних місій.</p>
-        <p>Ми не є професійним фондом, ми — волонтерський хаб. Усі зібрані кошти (100%) перераховуються на великі перевірені збори фонду <b>"Повернись живим"</b> та офіційні державні рахунки <b>United24</b>.</p>
-        <hr style="border: 0.5px solid #eee; margin: 20px 0;">
-        <p>Ваша підтримка — це дрони, що рятують життя, та броня, що тримає удар. Разом до перемоги!</p>
-        <button class="btn" style="background: var(--ua-blue); width: auto; padding: 15px 40px;" onclick="toggleMenu()">ЗРОЗУМІЛО</button>
+        <p><b>Front-Help_UA</b> — це незалежна платформа для швидкої підтримки захисників України.</p>
+        <p>Усі зібрані кошти (100%) перераховуються на великі перевірені збори фонду <b>"Повернись живим"</b> та <b>United24</b>.</p>
+        <button class="btn" style="background: var(--ua-blue); width: auto; padding: 15px 40px; margin: 20px auto;" onclick="toggleMenu()">ЗРОЗУМІЛО</button>
     </div>
 </div>
 
 <div class="container">
     <div class="card">
         <div class="card-title">🛸 УДАРНІ ДРОНИ</div>
-        <div class="vals"><span>0 ₴</span><span>Ціль: 500 000 ₴</span></div>
+        <div class="vals"><span id="cur-1">0 ₴</span><span>Ціль: 500 000 ₴</span></div>
         <div class="progress-box"><div class="bar" id="bar-1"></div></div>
-        <a href="https://send.monobank.ua/" class="btn">ПІДТРИМАТИ</a>
+        <a href="https://send.monobank.ua/" class="btn" target="_blank">ПІДТРИМАТИ</a>
         <span class="card-num">MONOBANK: 4874 0700 2067 2612</span>
     </div>
 
     <div class="card">
         <div class="card-title">🛡️ БРОНЕТЕХНІКА</div>
-        <div class="vals"><span>0 ₴</span><span>Ціль: 5 000 000 ₴</span></div>
+        <div class="vals"><span id="cur-2">0 ₴</span><span>Ціль: 5 000 000 ₴</span></div>
         <div class="progress-box"><div class="bar" id="bar-2"></div></div>
-        <a href="https://send.monobank.ua/" class="btn">ПІДТРИМАТИ</a>
+        <a href="https://send.monobank.ua/" class="btn" target="_blank">ПІДТРИМАТИ</a>
         <span class="card-num">MONOBANK: 4874 0700 5838 4718</span>
     </div>
 
     <div class="card">
         <div class="card-title">🐾 PET RECOVERY</div>
-        <div class="vals"><span>0 ₴</span><span>Ціль: 200 000 ₴</span></div>
+        <div class="vals"><span id="cur-3">0 ₴</span><span>Ціль: 200 000 ₴</span></div>
         <div class="progress-box"><div class="bar" id="bar-3"></div></div>
-        <a href="https://next.privat24.ua/" class="btn">ПІДТРИМАТИ</a>
+        <a href="https://next.privat24.ua/" class="btn" target="_blank">ПІДТРИМАТИ</a>
         <span class="card-num">PRIVAT24: 5168 7521 2434 8700</span>
     </div>
 </div>
 
-<script>
-    function toggleMenu() {
-        document.getElementById('menu').classList.toggle('active');
-    }
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
-    // Тимчасова анімація барів (поки не підключено Firebase)
-    window.onload = () => {
-        // Тут будуть твої реальні дані з Firebase
-        // Наприклад:
-        setTimeout(() => {
-            document.getElementById('bar-1').style.width = "0%";
-            document.getElementById('bar-2').style.width = "0%";
-            document.getElementById('bar-3').style.width = "0%";
-        }, 500);
+    const firebaseConfig = {
+        apiKey: "AIzaSyD3BQTZeCp74owFliqECbUgufJ3UC6dFC8",
+        authDomain: "vip-shop-a2ec4.firebaseapp.com",
+        projectId: "vip-shop-a2ec4",
+        databaseURL: "https://vip-shop-a2ec4-default-rtdb.firebaseio.com",
+        appId: "1:429877342673:web:bf2fbcddd5f3ba04c670f0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const targets = { 1: 500000, 2: 5000000, 3: 200000 };
+
+    // СИНХРОНІЗАЦІЯ
+    onValue(ref(db, 'zbir_progress'), (snapshot) => {
+        const data = snapshot.val() || { 1: 0, 2: 0, 3: 0 };
+        for (let i = 1; i <= 3; i++) {
+            const current = data[i] || 0;
+            const percent = Math.min((current / targets[i]) * 100, 100);
+            
+            document.getElementById(`cur-${i}`).innerText = current.toLocaleString() + " ₴";
+            document.getElementById(`bar-${i}`).style.width = percent + "%";
+        }
+    });
+
+    window.toggleMenu = () => {
+        document.getElementById('menu').classList.toggle('active');
     };
 </script>
 
