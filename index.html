@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEFENSE_UNITY | LIVE SYNC</title>
+    <style>
+        :root { --army: #1b1f13; --gold: #c5a059; --text: #f4f4f4; }
+        body { background: var(--army); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 40px; }
+        .container { max-width: 500px; margin: 20px auto; padding: 15px; }
+        .card { background: #22271b; padding: 25px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .progress-box { background: #000; height: 12px; border-radius: 6px; margin: 15px 0; overflow: hidden; border: 1px solid #444; }
+        .bar { height: 100%; width: 0%; background: linear-gradient(90deg, #8b6e37, var(--gold)); transition: 2s ease-in-out; }
+        .vals { display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; }
+        .btn { display: block; width: 100%; background: var(--gold); color: #000; padding: 18px; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; text-decoration: none; text-align: center; margin-top: 15px; font-size: 16px; }
+        .card-num { display: block; text-align: center; font-size: 11px; color: #666; margin-top: 10px; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 style="text-align:center; letter-spacing:4px; color:var(--gold); margin-bottom:30px;">LIVE_DONATION_HUB</h2>
+    
+    <div class="card">
+        <div style="font-weight:800; margin-bottom:10px;">🛸 УДАРНІ ДРОНИ</div>
+        <div class="vals">
+            <span id="cur-1">Завантаження...</span>
+            <span style="opacity:0.6;">Ціль: 500 000 ₴</span>
+        </div>
+        <div class="progress-box"><div class="bar" id="bar-1"></div></div>
+        <a href="https://send.monobank.ua/" target="_blank" class="btn">ПІДТРИМАТИ</a>
+        <span class="card-num">4874 0700 5838 4718</span>
+    </div>
+
+    <div class="card">
+        <div style="font-weight:800; margin-bottom:10px;">🛡️ БРОНЕТЕХНІКА</div>
+        <div class="vals">
+            <span id="cur-2">Завантаження...</span>
+            <span style="opacity:0.6;">Ціль: 5 000 000 ₴</span>
+        </div>
+        <div class="progress-box"><div class="bar" id="bar-2"></div></div>
+        <a href="https://www.privat24.ua/" target="_blank" class="btn">ПІДТРИМАТИ</a>
+        <span class="card-num">4874 0700 2067 2612</span>
+    </div>
+
+    <div class="card">
+        <div style="font-weight:800; margin-bottom:10px;">🐾 PET RECOVERY</div>
+        <div class="vals">
+            <span id="cur-3">Завантаження...</span>
+            <span style="opacity:0.6;">Ціль: 200 000 ₴</span>
+        </div>
+        <div class="progress-box"><div class="bar" id="bar-3"></div></div>
+        <a href="https://next.privat24.ua/" target="_blank" class="btn">ПІДТРИМАТИ</a>
+        <span class="card-num">5168 7521 2434 8700</span>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+
+    // Твій Firebase Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyD3BQTZeCp74owFliqECbUgufJ3UC6dFC8",
+        authDomain: "vip-shop-a2ec4.firebaseapp.com",
+        projectId: "vip-shop-a2ec4",
+        databaseURL: "https://vip-shop-a2ec4-default-rtdb.firebaseio.com",
+        appId: "1:429877342673:web:bf2fbcddd5f3ba04c670f0"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const targets = { 1: 500000, 2: 5000000, 3: 200000 };
+
+    // Жива синхронізація з Google Firebase
+    onValue(ref(db, 'zbir_progress'), (snapshot) => {
+        const data = snapshot.val() || { 1: 0, 2: 0, 3: 0 };
+        for (let i = 1; i <= 3; i++) {
+            const current = data[i] || 0;
+            const percent = (current / targets[i]) * 100;
+            document.getElementById(`cur-${i}`).innerText = current.toLocaleString() + " ₴";
+            document.getElementById(`bar-${i}`).style.width = Math.min(percent, 100) + "%";
+        }
+    });
+</script>
+</body>
+</html>
