@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
+    <meta name="google-site-verification" content="ewlr1PkIes5XLqtMzcCQ-MT1oKafjWnZ-thUZVAP-Wg" />
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Front-Help_UA | Офіційний збір</title>
+    <title>Front-Help_UA | Допомога Силам Оборони</title>
+    
+    <meta name="description" content="Front-Help_UA — волонтерська платформа для збору коштів на дрони, броню та допомогу тваринам.">
+    <meta property="og:title" content="Front-Help_UA">
+    <meta property="og:type" content="website">
+
     <style>
         :root { --ua-blue: #0057b7; --ua-yellow: #ffd700; --bg: #ffffff; --card-bg: #f8f9fa; }
         * { box-sizing: border-box; } 
         body { background: var(--bg); color: #333; font-family: 'Segoe UI', sans-serif; margin: 0; padding-top: 80px; }
 
+        /* Шапка */
         header { background: #fff; border-bottom: 3px solid var(--ua-blue); padding: 15px 20px; position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .logo { font-weight: 900; color: var(--ua-blue); font-size: 22px; }
         
         .burger { cursor: pointer; padding: 5px; }
         .burger div { width: 30px; height: 4px; background: var(--ua-blue); margin: 5px; border-radius: 2px; }
 
-        #menu { position: fixed; top: 0; right: -100%; width: 100%; height: 100%; background: #fff; transition: 0.4s; z-index: 2000; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        /* Сторінка Про нас */
+        #menu { position: fixed; top: 0; right: -100%; width: 100%; height: 100%; background: #fff; transition: 0.4s; z-index: 2000; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; overflow-y: auto; }
         #menu.active { right: 0; }
         .close-menu { position: absolute; top: 20px; right: 20px; font-size: 40px; cursor: pointer; color: var(--ua-blue); }
 
@@ -23,19 +32,19 @@
         .card { background: var(--card-bg); border: 1px solid #e0e0e0; border-radius: 20px; padding: 25px; margin-bottom: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .card-title { font-weight: 800; font-size: 18px; color: var(--ua-blue); margin-bottom: 10px; }
 
-        /* ВИПРАВЛЕНИЙ ПРОГРЕС БАР */
         .progress-box { background: #e0e0e0; height: 16px; border-radius: 8px; margin: 15px 0; overflow: hidden; border: 1px solid #ddd; }
         .bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--ua-blue), var(--ua-yellow)); transition: 1.5s cubic-bezier(0.1, 0.5, 0.5, 1); }
 
         .vals { display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; margin-bottom: 5px; }
 
+        /* Кнопка */
         .btn { 
             display: block; width: 100%; padding: 18px; border: none; border-radius: 15px; 
             font-weight: 900; font-size: 18px; cursor: pointer; text-decoration: none; text-align: center;
             color: white; background: linear-gradient(45deg, #0057b7, #ffd700, #0057b7);
             background-size: 200% auto; transition: 0.5s;
         }
-        .btn:hover { background-position: right center; }
+        .btn:hover { background-position: right center; transform: translateY(-2px); }
         .card-num { display: block; text-align: center; font-size: 12px; color: #888; margin-top: 12px; font-weight: 600; }
     </style>
 </head>
@@ -50,10 +59,12 @@
 
 <div id="menu">
     <div class="close-menu" onclick="toggleMenu()">&times;</div>
-    <div class="about-content" style="text-align:center; padding-top:50px;">
-        <h2>Про проект</h2>
-        <p>Усі кошти передаються на офіційні збори.</p>
-        <button class="btn" style="width:200px; margin:20px auto;" onclick="toggleMenu()">ЗАКРИТИ</button>
+    <div style="text-align:center; padding-top:50px; max-width: 500px;">
+        <h2 style="color: var(--ua-blue);">ПРО ПРОЕКТ</h2>
+        <p><b>Front-Help_UA</b> — це волонтерська ініціатива для збору коштів на потреби ЗСУ та гуманітарні цілі.</p>
+        <p>Усі зібрані кошти (100%) спрямовуються на великі збори фондів <b>"Повернись живим"</b> та <b>United24</b>.</p>
+        <p>Ми забезпечуємо прозорість через прямі реквізити та живий моніторинг прогресу.</p>
+        <button class="btn" style="width:200px; margin:20px auto; background: var(--ua-blue);" onclick="toggleMenu()">ЗАКРИТИ</button>
     </div>
 </div>
 
@@ -99,23 +110,15 @@
     const db = getDatabase(app);
     const targets = { 1: 500000, 2: 5000000, 3: 200000 };
 
-    // СЛУХАЄМО ЗМІНИ В РЕАЛЬНОМУ ЧАСІ
     onValue(ref(db, 'zbir_progress'), (snapshot) => {
         const data = snapshot.val() || { 1: 0, 2: 0, 3: 0 };
-        
         for (let i = 1; i <= 3; i++) {
             const current = Number(data[i]) || 0;
-            const target = targets[i];
-            
-            // РОЗРАХУНОК ВІДСОТКА
-            let percent = (current / target) * 100;
-            if (percent > 100) percent = 100; // Щоб не вилітало за край
+            let percent = (current / targets[i]) * 100;
+            if (percent > 100) percent = 100;
 
-            // ОНОВЛЕННЯ ТЕКСТУ ТА СМУЖКИ
             document.getElementById(`cur-${i}`).innerText = current.toLocaleString() + " ₴";
             document.getElementById(`bar-${i}`).style.width = percent + "%";
-            
-            console.log(`Збір ${i}: зібрано ${current}, це ${percent}%`);
         }
     });
 
