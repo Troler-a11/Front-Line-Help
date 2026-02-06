@@ -2,29 +2,33 @@
 <html lang="uk">
 <head>
     <meta name="google-site-verification" content="ewlr1PkIes5XLqtMzcCQ-MT1oKafjWnZ-thUZVAP-Wg" />
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Front-Help_UA | Допомога Силам Оборони</title>
+    <title>Front-Help_UA | Збір на дрони та допомога ЗСУ</title>
     
-    <meta name="description" content="Front-Help_UA — волонтерська платформа для збору коштів на дрони, броню та допомогу тваринам.">
-    <meta property="og:title" content="Front-Help_UA">
+    <meta name="description" content="Front-Help_UA: Збір на дрони, допомога ЗСУ, збір на броню, допомога тваринам. Долучайся до перемоги!">
+    <meta name="keywords" content="Збір на дрони, Допомога ЗСУ, Фронт Хелп, Збір на броню, Дрони для фронту, Допомога тваринам, Волонтери дрони, Донат на ЗСУ, Купити дрон ЗСУ, Збір на пікап, Допомога армії">
+
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://front-line-help.onrender.com/">
+    <meta property="og:title" content="Front-Help_UA — Допомога Силам Оборони">
+    <meta property="og:description" content="Разом збираємо на дрони та броню. Твоя гривня — це життя воїна. Приєднуйся!">
+    <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Ukraine.svg/800px-Flag_of_Ukraine.svg.png">
+
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Flag_of_Ukraine.svg/32px-Flag_of_Ukraine.svg.png" type="image/x-icon">
 
     <style>
         :root { --ua-blue: #0057b7; --ua-yellow: #ffd700; --bg: #ffffff; --card-bg: #f8f9fa; }
         * { box-sizing: border-box; } 
         body { background: var(--bg); color: #333; font-family: 'Segoe UI', sans-serif; margin: 0; padding-top: 80px; }
 
-        /* Шапка */
         header { background: #fff; border-bottom: 3px solid var(--ua-blue); padding: 15px 20px; position: fixed; top: 0; width: 100%; z-index: 1000; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .logo { font-weight: 900; color: var(--ua-blue); font-size: 22px; }
         
         .burger { cursor: pointer; padding: 5px; }
         .burger div { width: 30px; height: 4px; background: var(--ua-blue); margin: 5px; border-radius: 2px; }
 
-        /* Сторінка Про нас */
-        #menu { position: fixed; top: 0; right: -100%; width: 100%; height: 100%; background: #fff; transition: 0.4s; z-index: 2000; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; overflow-y: auto; }
+        #menu { position: fixed; top: 0; right: -100%; width: 100%; height: 100%; background: #fff; transition: 0.4s; z-index: 2000; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
         #menu.active { right: 0; }
         .close-menu { position: absolute; top: 20px; right: 20px; font-size: 40px; cursor: pointer; color: var(--ua-blue); }
 
@@ -37,15 +41,16 @@
 
         .vals { display: flex; justify-content: space-between; font-weight: bold; font-size: 14px; margin-bottom: 5px; }
 
-        /* Кнопка */
         .btn { 
             display: block; width: 100%; padding: 18px; border: none; border-radius: 15px; 
             font-weight: 900; font-size: 18px; cursor: pointer; text-decoration: none; text-align: center;
             color: white; background: linear-gradient(45deg, #0057b7, #ffd700, #0057b7);
             background-size: 200% auto; transition: 0.5s;
         }
-        .btn:hover { background-position: right center; transform: translateY(-2px); }
+        .btn:hover { background-position: right center; }
         .card-num { display: block; text-align: center; font-size: 12px; color: #888; margin-top: 12px; font-weight: 600; }
+        
+        .seo-text { position: absolute; left: -9999px; }
     </style>
 </head>
 <body>
@@ -59,11 +64,10 @@
 
 <div id="menu">
     <div class="close-menu" onclick="toggleMenu()">&times;</div>
-    <div style="text-align:center; padding-top:50px; max-width: 500px;">
-        <h2 style="color: var(--ua-blue);">ПРО ПРОЕКТ</h2>
-        <p><b>Front-Help_UA</b> — це волонтерська ініціатива для збору коштів на потреби ЗСУ та гуманітарні цілі.</p>
-        <p>Усі зібрані кошти (100%) спрямовуються на великі збори фондів <b>"Повернись живим"</b> та <b>United24</b>.</p>
-        <p>Ми забезпечуємо прозорість через прямі реквізити та живий моніторинг прогресу.</p>
+    <div style="text-align:center; padding-top:50px;">
+        <h2>Про нас</h2>
+        <p><b>Front-Help_UA</b> — це прозорі збори на дрони та допомогу армії.</p>
+        <p>Усі кошти йдуть на офіційні фонди <b>Повернись живим</b> та <b>United24</b>.</p>
         <button class="btn" style="width:200px; margin:20px auto; background: var(--ua-blue);" onclick="toggleMenu()">ЗАКРИТИ</button>
     </div>
 </div>
@@ -92,6 +96,10 @@
         <a href="https://next.privat24.ua/" class="btn" target="_blank">ПІДТРИМАТИ</a>
         <span class="card-num">PRIVAT24: 5168 7521 2434 8700</span>
     </div>
+
+    <div class="seo-text">
+        Збір на дрони, допомога ЗСУ, Фронт Хелп, збір на броню, дрони для фронту, допомога тваринам, волонтери дрони, донат на ЗСУ, купити дрон ЗСУ, збір на пікап, допомога армії.
+    </div>
 </div>
 
 <script type="module">
@@ -114,8 +122,7 @@
         const data = snapshot.val() || { 1: 0, 2: 0, 3: 0 };
         for (let i = 1; i <= 3; i++) {
             const current = Number(data[i]) || 0;
-            let percent = (current / targets[i]) * 100;
-            if (percent > 100) percent = 100;
+            let percent = Math.min((current / targets[i]) * 100, 100);
 
             document.getElementById(`cur-${i}`).innerText = current.toLocaleString() + " ₴";
             document.getElementById(`bar-${i}`).style.width = percent + "%";
